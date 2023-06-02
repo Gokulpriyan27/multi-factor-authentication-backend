@@ -1,7 +1,8 @@
 const express = require('express');
 const dotenv=require("dotenv");
 dotenv.config();
-const session = require('express-session');
+// const session = require('express-session');
+const cookieSession = require("cookie-session");
 const passport = require('passport');
 const database = require("./database/database")
 const authRoutes = require('./routes/auth.routes');
@@ -9,12 +10,6 @@ const app = express();
 const cors = require("cors");
 
 
-
-// const corsOptions = {
-//   origin: [process.env.frontend_url,process.env.googleurl],
-//   methods: 'GET, POST, PATCH, DELETE, PUT',
-//   allowedHeaders: 'Content-Type, Authorization',
-// };
 
 app.use(cors({
   origin:process.env.frontend_url,
@@ -30,12 +25,23 @@ app.use(express.json())
 database();
 
 // Middleware
-// app.use(express.urlencoded({ extended: true }));
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: false,
-}));
+
+app.use(express.urlencoded({ extended: true }));
+
+// app.use(session({
+//   secret: 'your-secret-key',
+//   resave: false,
+//   saveUninitialized: false,
+
+// }));
+
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["secret"],
+  })
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
