@@ -78,6 +78,7 @@ const logoutUser = (req, res) => {
 
 const authSuccess = (req,res)=>{
   try {
+    console.log(req.user,"req.user details")
     if(req.user){
       return res.status(201).send({data:req.user})
     }
