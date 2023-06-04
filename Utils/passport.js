@@ -111,10 +111,10 @@ const User = require('../models/userModel');
 //   }
 // });
 
-passport.serializeUser((user,done)=>{
-  done(null,user)
+passport.serializeUser(async(user,done)=>{
+  await done(null,user)
 })
 
-passport.deserializeUser((user,done)=>{
-  done(null,user)
+passport.deserializeUser(async(user,done)=>{
+  await done(null,user)
 })

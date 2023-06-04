@@ -78,9 +78,10 @@ const logoutUser = (req, res) => {
 
 const authSuccess = (req,res)=>{
   try {
-    console.log(req.user,"req.user details")
+    console.log(req.user,"req.user details");
     if(req.user){
-      return res.status(201).send({data:req.user})
+      // return res.status(201).send({data:req.user})
+      res.redirect(`${process.env.frontend_url}/dashboard`);
     }
   } catch (error) {
     return res.status(400).send({message:"Authentication Failed"})
