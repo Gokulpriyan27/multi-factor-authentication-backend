@@ -21,7 +21,9 @@ router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
-router.get("/google/callback",passport.authenticate("google", { failureRedirect: "/" }),authSuccess);
+router.get("/google/callback",passport.authenticate("google", { failureRedirect: "/" }),(req,res)=>{
+  return res.status(200).send({message:"Login successful",data:req.user});
+});
 
 
 router.get("/github", passport.authenticate("github"));
