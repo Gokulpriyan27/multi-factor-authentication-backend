@@ -14,15 +14,13 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/logout", logoutUser);
 
-router.get("/success",authSuccess);
-
 
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 router.get("/google/callback",passport.authenticate("google", { failureRedirect: "/" }),(req,res)=>{
-  return res.status(200).send({message:"Login successful",data:req.user});
+  res.redirect(`${process.env.frontend_url}/dashboard?id=${req.user.googleId}&displayName=${req.user.username}&image=${req.user.image}`)
 });
 
 
@@ -33,7 +31,7 @@ router.get(
   passport.authenticate("github", { failureRedirect: "/" }),
   (req, res) => {
     
-    res.redirect(`${process.env.frontend_url}/dashboard`);
+    res.redirect(`${process.env.frontend_url}/dashboard?id=${req.user.githubId}&displayName=${req.user.username}&image=${req.user.image}`)
   }
 );
 
@@ -41,7 +39,7 @@ router.get(
 router.get('/facebook', passport.authenticate('facebook'));
 router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
 
-  res.redirect(`${process.env.frontend_url}/dashboard`);
+  res.redirect(`${process.env.frontend_url}/dashboard?id=${req.user.facebookId}&displayName=${req.user.username}&image=${req.user.image}`)
 });
 
 module.exports = router;
